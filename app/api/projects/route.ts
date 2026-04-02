@@ -4,7 +4,7 @@ import Project from "@/models/Project";
 
 export async function GET() {
   try {
-    await dbConnect();
+    // await dbConnect();
     const projects = await Project.find({}).sort({ createdAt: -1 });
     return NextResponse.json({ success: true, data: projects });
   } catch (error: any) {
@@ -14,7 +14,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    await dbConnect();
+    // await dbConnect();
     const body = await req.json();
     const project = await Project.create(body);
     return NextResponse.json({ success: true, data: project }, { status: 201 });

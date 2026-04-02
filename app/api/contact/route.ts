@@ -4,7 +4,7 @@ import Message from "@/models/Message";
 
 export async function POST(req: Request) {
   try {
-    await dbConnect();
+    // await dbConnect();
     const body = await req.json();
     const message = await Message.create(body);
     return NextResponse.json({ success: true, data: message }, { status: 201 });
