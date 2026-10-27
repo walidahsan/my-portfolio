@@ -6,18 +6,21 @@ import { useRef } from "react";
 import * as THREE from "three";
 
 function Icosahedron() {
-  const mesh = useRef<THREE.Mesh>(null);
+  const outer = useRef<THREE.Mesh>(null);
+  const inner = useRef<THREE.Mesh>(null);
   
   useFrame((state, delta) => {
-    if (mesh.current) {
-      mesh.current.rotation.x += delta * 0.15;
-      mesh.current.rotation.y += delta * 0.2;
+    for (const mesh of [outer.current, inner.current]) {
+      if (mesh) {
+        mesh.rotation.x += delta * 0.15;
+        mesh.rotation.y += delta * 0.2;
+      }
     }
   });
 
   return (
     <Float speed={2.5} rotationIntensity={2} floatIntensity={3}>
-      <mesh ref={mesh} scale={1.8}>
+      <mesh ref={outer} scale={1.8}>
         <icosahedronGeometry args={[1, 1]} />
         <meshPhysicalMaterial 
           color="#00f0ff" 
@@ -29,7 +32,7 @@ function Icosahedron() {
         />
       </mesh>
       
-      <mesh ref={mesh} scale={1.4}>
+      <mesh ref={inner} scale={1.4}>
         <icosahedronGeometry args={[1, 0]} />
         <meshStandardMaterial 
           color="#8a2be2" 

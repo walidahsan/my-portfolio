@@ -29,7 +29,7 @@ const experiences = [
       "Led the development and maintenance of enterprise web applications, ensuring reliability and performance for daily business operations. Built robust and efficient REST APIs with Node.js, Express.js.",
       "Successfully migrated legacy systems to modern Django + React frameworks, enhancing maintainability and scalability.",
       "Designed and implemented secure APIs and role-based authentication, supporting 200+ daily active users.",
-      "Regularly pushed code to Git to ensure up-to-date version tracking and collaboration."
+      "Maintained Git-based version control and code reviews to keep releases traceable and collaboration smooth."
     ]
   }
 ];
@@ -47,7 +47,7 @@ export default function Experience() {
           className="relative pl-10 md:pl-12"
         >
           {/* Timeline Dot */}
-          <div className="absolute -left-[24px] top-1 w-12 h-12 bg-black border-2 border-[#00f0ff] rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,240,255,0.4)]">
+          <div className="absolute -left-[24px] top-1 w-12 h-12 bg-black border-2 border-[#00f0ff] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.4)]">
             <Briefcase className="w-5 h-5 text-[#8a2be2]" />
           </div>
 

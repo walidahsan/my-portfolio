@@ -9,7 +9,7 @@ const skillsData = [
   },
   {
     category: "Frameworks & Ecosystems",
-    items: ["React.js", "Node.js", "Express.js", "Django", "Flutter", "Tailwind CSS", "Bootstrap", "MVC/MVT"],
+    items: ["React.js", "Next.js", "Node.js", "Express.js", "Django", "Flutter", "Tailwind CSS", "Bootstrap", "MVC/MVT"],
   },
   {
     category: "Databases & Tools",

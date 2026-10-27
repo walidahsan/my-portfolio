@@ -8,18 +8,20 @@ import DownloadCV3D from "@/components/ui/DownloadCV3D";
 import Skills3D from "@/components/ui/Skills3D";
 import InteractiveAvatar from "@/components/ui/InteractiveAvatar";
 import Navbar from "@/components/ui/Navbar";
-import { Download, Code, Briefcase, Mail } from "lucide-react";
+import { Download, Code } from "lucide-react";
+import Image from "next/image";
+import profilePhoto from "@/public/images/walid-ahsan-profile.jpg";
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative text-white selection:bg-[#00f0ff] selection:text-black font-sans scroll-smooth overflow-x-hidden">
+    <main className="min-h-screen relative text-white selection:bg-[#00f0ff] selection:text-black scroll-smooth overflow-x-hidden">
       <Navbar />
       <Hero3D />
       {/* Dark overlay to dim the 3D background for better text legibility */}
       <div className="fixed inset-0 bg-black/60 pointer-events-none -z-[5]"></div>
 
       {/* Hero Section Overlay */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pointer-events-none px-6 text-center py-20">
+      <section className="relative min-h-screen flex flex-col items-center justify-center pointer-events-none px-6 text-center pt-28 pb-20">
         {/* Interactive 3D Headshot Avatar */}
         <InteractiveAvatar />
 
@@ -55,7 +57,25 @@ export default function Home() {
 
       {/* About & Download CV Enhanced Section */}
       <section id="about" className="py-24 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-        <div className="lg:col-span-2 bg-black/40 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+        <div className="lg:col-span-2 bg-black/40 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] grid md:grid-cols-[13rem_1fr] gap-8 items-start">
+          {/* Profile photo with neon gradient frame */}
+          <div className="relative mx-auto md:mx-0 w-52 md:w-full group">
+            <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-br from-[#00f0ff] via-[#8a2be2] to-[#00f0ff] opacity-80 blur-[1px] group-hover:opacity-100 transition-opacity" />
+            <div className="relative rounded-2xl overflow-hidden bg-black">
+              <Image
+                src={profilePhoto}
+                alt="Walid Ahsan in a grey blazer"
+                placeholder="blur"
+                sizes="13rem"
+                className="w-full h-auto aspect-[4/5] object-cover object-top grayscale-[35%] group-hover:grayscale-0 transition-all duration-500"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
+                <p className="text-xs font-mono text-[#00f0ff]">~/walid-ahsan</p>
+                <p className="text-sm font-bold text-white">Full Stack Developer</p>
+              </div>
+            </div>
+          </div>
+          <div>
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white border-l-4 border-[#00f0ff] pl-4">Professional <span className="text-[#8a2be2]">Summary</span></h2>
           <div className="space-y-4 text-zinc-300 leading-relaxed text-lg">
             <p>
@@ -70,6 +90,7 @@ export default function Home() {
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               <span className="text-sm font-medium">Available for Hybrid / Remote Roles</span>
             </div>
+          </div>
           </div>
         </div>
 
@@ -137,7 +158,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-center py-8 text-zinc-500 text-sm border-t border-white/5 bg-black">
-        <p>© {new Date().getFullYear()} All rights reserved. Made with ❤️</p>
+        <p>© {new Date().getFullYear()} Walid Ahsan. All rights reserved.</p>
       </footer>
     </main>
   );

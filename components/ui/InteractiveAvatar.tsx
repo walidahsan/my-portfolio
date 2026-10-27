@@ -1,118 +1,72 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import Image from "next/image";
+import portrait from "@/public/images/walid-ahsan-portrait.jpg";
 
 export default function InteractiveAvatar() {
-  const ref = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // State to hold the current image direction
-  const [currentImage, setCurrentImage] = useState("/walidahsan.png");
-
-  // Smooth the raw mouse values to give a buttery animated feel to the face tilt
+  // Smooth the raw pointer values so the tilt feels weighted rather than twitchy
   const springConfig = { damping: 25, stiffness: 120 };
-  const x = useSpring(mouseX, springConfig);
-  const y = useSpring(mouseY, springConfig);
-
-  // If mouse is on the left (-0.5), rotateY is negative (normal points left)
-  // If mouse is on the top (-0.5), rotateX is positive (normal points up)
-  const rotateX = useTransform(y, [-0.5, 0.5], [30, -30]);
-  const rotateY = useTransform(x, [-0.5, 0.5], [-30, 30]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      // Calculate normalized mouse position relative to the entire window
-      const normalizedX = (e.clientX / window.innerWidth) - 0.5;
-      const normalizedY = (e.clientY / window.innerHeight) - 0.5;
-
-      mouseX.set(normalizedX);
-      mouseY.set(normalizedY);
-
-      // Determine the dominant direction
-      const threshold = 0.15; // How far the mouse needs to move to trigger a new image
-
-      const isXActive = Math.abs(normalizedX) > threshold;
-      const isYActive = Math.abs(normalizedY) > threshold;
-      setCurrentImage("/walidahsan.png")
-
-      // if (isXActive && isYActive) {
-      //   // Diagonals (using standard Math cartesian planes relative to screen where +Y is down)
-      //   if (normalizedX > 0 && normalizedY < 0) {
-      //     setCurrentImage("/walidahsan-up-right.png");
-      //   } else if (normalizedX < 0 && normalizedY < 0) {
-      //     setCurrentImage("/walidahsan-up-left.png");
-      //   } else if (normalizedX > 0 && normalizedY > 0) {
-      //     setCurrentImage("/walidahsan-down-right.png");
-      //   } else if (normalizedX < 0 && normalizedY > 0) {
-      //     setCurrentImage("/walidahsan-down-left.png");
-      //   }
-      // } else if (isXActive) {
-      //   // Strictly Horizontal
-      //   if (normalizedX > 0) {
-      //     setCurrentImage("/walidahsan-right.png");
-      //   } else {
-      //     setCurrentImage("/walidahsan-left.png");
-      //   }
-      // } else if (isYActive) {
-      //   // Strictly Vertical
-      //   if (normalizedY > 0) {
-      //     setCurrentImage("/walidahsan-down.png"); // +y is down on screen
-      //   } else {
-      //     setCurrentImage("/walidahsan-up.png"); // -y is up on screen
-      //   }
-      // } else {
-      //   // Center Rest State
-      //   setCurrentImage("/walidahsan.png");
-      // }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [14, -14]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-14, 14]), springConfig);
 
   return (
-    <div style={{ perspective: 1200 }} className="mb-6 pointer-events-auto">
+    <div
+      style={{ perspective: 1000 }}
+      className="mb-8 pointer-events-auto"
+      onPointerMove={(e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        mouseX.set((e.clientX - r.left) / r.width - 0.5);
+        mouseY.set((e.clientY - r.top) / r.height - 0.5);
+      }}
+      onPointerLeave={() => {
+        mouseX.set(0);
+        mouseY.set(0);
+      }}
+    >
       <motion.div
-        ref={ref}
-        style={{
-          // rotateX,
-          // rotateY,
-          transformStyle: "preserve-3d"
-        }}
-        // Completely removed borders, shadows, backgrounds, and circular cuts to let the raw PNG shine naturally
-        className="w-32 h-32 md:w-48 md:h-48 flex items-center justify-center pointer-events-auto group cursor-pointer relative bg-transparent"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="relative w-40 h-40 md:w-52 md:h-52"
       >
-        {/* 
-          This is the element holding your actual image.
-          We use translateZ so the image visually floats slightly inside the "bubble",
-          making the 3D effect look incredibly deep when rotating!
-        */}
+        {/* Glow */}
+        <div className="absolute -inset-6 rounded-full bg-gradient-to-tr from-[#00f0ff]/40 to-[#8a2be2]/40 blur-3xl" />
+
+        {/* Rotating neon ring */}
         <motion.div
-          style={{ translateZ: "40px", transformStyle: "preserve-3d" }}
-          className="absolute inset-0 w-full h-full flex items-center justify-center bg-transparent"
+          aria-hidden
+          animate={{ rotate: 360 }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          className="absolute -inset-1 rounded-full bg-[conic-gradient(from_0deg,#00f0ff,#8a2be2,transparent_55%,#00f0ff)]"
+        />
+
+        {/* Photo */}
+        <div
+          className="absolute inset-[4px] rounded-full overflow-hidden bg-black ring-2 ring-black"
+          style={{ transform: "translateZ(30px)" }}
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentImage}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              className="absolute inset-0 w-full h-full"
-            >
-              <Image
-                src={currentImage}
-                alt="Walid Ahsan Avatar"
-                fill
-                className="object-contain bg-transparent"
-                unoptimized
-              />
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
+          <Image
+            src={portrait}
+            alt="Walid Ahsan, full stack developer"
+            placeholder="blur"
+            priority
+            sizes="(min-width: 768px) 13rem, 10rem"
+            className="w-full h-full object-cover scale-[2.1] origin-[50%_26%]"
+          />
+        </div>
+
+        {/* Status chip */}
+        <div
+          className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-black/80 backdrop-blur-md px-3 py-1 text-xs font-medium text-zinc-200"
+          style={{ transform: "translateZ(50px)" }}
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> Open to work
+        </div>
       </motion.div>
     </div>
   );

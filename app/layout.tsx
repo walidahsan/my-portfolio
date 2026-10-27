@@ -13,8 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "3D Developer Portfolio",
-  description: "MERN Stack Web Developer specializing in 3D interactive applications",
+  title: "Walid Ahsan — Full Stack Developer (MERN, Next.js, Django)",
+  description:
+    "Walid Ahsan is a full stack developer with 3+ years of experience building scalable web and SaaS platforms with the MERN stack, Next.js and Django.",
+  openGraph: {
+    title: "Walid Ahsan — Full Stack Developer",
+    description: "Scalable web and SaaS platforms built with the MERN stack, Next.js and Django.",
+    images: ["/images/walid-ahsan-portrait.jpg"],
+  },
 };
 
 export default function RootLayout({

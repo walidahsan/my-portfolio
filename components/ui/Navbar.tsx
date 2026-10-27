@@ -34,13 +34,11 @@ export default function Navbar() {
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2">
-            <span className="w-full h-8 px-3 rounded bg-gradient-to-tr from-[#00f0ff] to-[#8a2be2] flex items-center justify-center font-bold text-white text-lg">
-              Portfolio
+          <a href="#" className="flex items-center gap-3" aria-label="Walid Ahsan — back to top">
+            <span className="w-9 h-9 rounded-lg bg-gradient-to-tr from-[#00f0ff] to-[#8a2be2] flex items-center justify-center font-extrabold text-black text-sm tracking-tight">
+              WA
             </span>
-            {/* <span className="text-xl font-bold tracking-tight text-white hidden sm:block">
-              alid Ahsan
-            </span> */}
+            <span className="text-lg font-bold tracking-tight text-white hidden sm:block">Walid Ahsan</span>
           </a>
 
           {/* Desktop Navigation */}
@@ -69,6 +67,8 @@ export default function Navbar() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-white p-2"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

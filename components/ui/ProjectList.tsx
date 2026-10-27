@@ -29,20 +29,20 @@ const featuredProjects: Project[] = [
   {
     _id: "2",
     title: "MasterBot - Turn Data into Dollars",
-    description: "Interactive web application for exploring and learning Italian culinary recipes.",
+    description: "Crypto trading signals platform that analyzes market trends and delivers real-time trading signals through paid subscription plans.",
     status: "Public",
     techStack: ["MERN", "JavaScript", "WebSockets", "REST APIs"],
-    imageUrl: "./masterbotSS.png",
+    imageUrl: "/masterbotSS.png",
     githubLink: "",
     liveUrl: "https://masterbot.xyz"
   },
   {
     _id: "3",
     title: "NovaUtils - The Ultimate Web Toolkit",
-    description: "Professional utility toolset developed with modern JavaScript features for enterprise efficiency.",
+    description: "Free web toolkit with calculators, converters, image tools and finance utilities for developers, SEO work and everyday tasks.",
     status: "Public",
-    techStack: ["JavaScript", "Tools"],
-    imageUrl: "./novautilsss.png",
+    techStack: ["Next.js", "React.js", "JavaScript"],
+    imageUrl: "/novautilsss.png",
     githubLink: "",
     liveUrl: "https://novautils.com"
 
@@ -51,20 +51,20 @@ const featuredProjects: Project[] = [
   {
     _id: "4",
     title: "PlayerzPortal Full Stack",
-    description: "Comprehensive gaming or player portal separating a React.js frontend from a robust Node.js backend API.",
+    description: "Gaming player portal with account sign-up and login, built as a React.js frontend backed by a Node.js API.",
     status: "Public",
     techStack: ["React.js", "Node.js", "JavaScript", "API"],
-    imageUrl: "./playerzportal.png",
+    imageUrl: "/playerzportal.png",
     githubLink: "",
     liveUrl: "https://playerzarena.netlify.app/"
   },
   {
     _id: "5",
     title: "WrestlingNewsPulse",
-    description: "A Wrestling CMS app developed with React.js leveraging live API calls from Coingecko.com to monitor digital assets.",
+    description: "Pro wrestling news site with a custom CMS for publishing articles, author pages, categories and an RSS feed.",
     status: "Public",
-    techStack: ["React.js", "JavaScript", "REST APIs"],
-    imageUrl: "./wrestlingnewspulsess.png",
+    techStack: ["Next.js", "React.js", "REST APIs"],
+    imageUrl: "/wrestlingnewspulsess.png",
     githubLink: "",
     liveUrl: "https://wrestlingnewspulse.com"
   },
@@ -139,23 +139,30 @@ export default function ProjectList() {
             </div>
 
             <div className="flex items-center gap-4 mt-auto pt-4 border-t border-zinc-800">
-              <a
-                href={project.githubLink}
-                className="text-zinc-400 hover:text-white transition-colors flex items-center gap-2 text-sm"
-                title="Source Code"
-                target="_blank"
-
-              >
-                <Code size={18} /> Code
-              </a>
-              {project.status === "Public" && (
+              {project.githubLink ? (
+                <a
+                  href={project.githubLink}
+                  className="text-zinc-400 hover:text-white transition-colors flex items-center gap-2 text-sm"
+                  title="Source Code"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Code size={18} /> Code
+                </a>
+              ) : (
+                <span className="text-zinc-500 flex items-center gap-2 text-sm">
+                  <Code size={18} /> {project.status === "Public" ? "Closed source" : "Client project"}
+                </span>
+              )}
+              {project.status === "Public" && project.liveUrl && (
                 <a
                   href={project.liveUrl}
                   className="text-zinc-400 hover:text-[#00f0ff] transition-colors flex items-center gap-2 text-sm ml-auto"
                   title="Live Demo"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  Demo <ExternalLink size={18} />
+                  Live site <ExternalLink size={18} />
                 </a>
               )}
             </div>
