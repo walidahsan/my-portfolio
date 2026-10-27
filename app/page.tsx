@@ -113,7 +113,7 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-12 items-center">
-          <div className="xl:col-span-1 border border-white/10 rounded-3xl p-2 bg-black/20 backdrop-blur-md shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+          <div className="xl:col-span-1">
             <Skills3D />
           </div>
           <div className="xl:col-span-2">
